@@ -11,8 +11,10 @@ pipeline {
         // Define your necessary environment variables here
         REPO_URL = 'https://github.com/yogeshcodeshare/SeleniumProjectDemo.git'
         MAVEN_CLEAN_PACKAGE = "mvn -Dmaven.test.failure.ignore=true clean package"
-        MAVEN_CLEAN_TEST_REGRESSION = "mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testrunner/test_regression.xml"
-        MAVEN_CLEAN_TEST_SANITY = "mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testrunner/test_sanity.xml"
+        //MAVEN_CLEAN_TEST_REGRESSION = "mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testrunner/test_regression.xml"
+        MAVEN_CLEAN_TEST_REGRESSION = "mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testrunner/test_regression.xml -Dallure.results.directory=allure-results-regression"
+        //MAVEN_CLEAN_TEST_SANITY = "mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testrunner/test_sanity.xml"
+        MAVEN_CLEAN_TEST_SANITY = "mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testrunner/test_sanity.xml -Dallure.results.directory=allure-results-sanity"
         ALLURE_RESULTS_DIR = 'allure-results'
         ALLURE_RESULTS_ARCHIVE_DIR = 'allure-results-archive'
     }
@@ -115,8 +117,7 @@ pipeline {
             }
         }
 
-
-        stage('Publish Allure Reports') {
+        stage('Publish Regression Allure Report') {
             steps {
                 script {
                     allure([
@@ -124,7 +125,7 @@ pipeline {
                         jdk: '',
                         properties: [],
                         reportBuildPolicy: 'ALWAYS',
-                        results: [[path: 'allure-results']]
+                        results: [[path: 'allure-results-regression']]
                     ])
                 }
             }
@@ -195,20 +196,35 @@ pipeline {
             }
         }
 
-        stage('Publish Sanity Extent Report') {
-            when {
-                expression { env.SANITY_TESTS_RAN == 'true' }
-            }
+        stage('Publish Sanity Allure Report') {
+            when { expression { env.SANITY_TESTS_RAN == 'true' } }
             steps {
-                publishHTML([allowMissing: false,
-                    alwaysLinkToLastBuild: false,
-                    keepAll: true,
-                    reportDir: 'TestReports',
-                    reportFiles: 'TestExecutionReport.html',
-                    reportName: 'HTML Sanity Extent Report',
-                    reportTitles: ''])
+                script {
+                    allure([
+                        includeProperties: false,
+                        jdk: '',
+                        properties: [],
+                        reportBuildPolicy: 'ALWAYS',
+                        results: [[path: 'allure-results-sanity']]
+                    ])
+                }
             }
         }
+
+//         stage('Publish Sanity Extent Report') {
+//             when {
+//                 expression { env.SANITY_TESTS_RAN == 'true' }
+//             }
+//             steps {
+//                 publishHTML([allowMissing: false,
+//                     alwaysLinkToLastBuild: false,
+//                     keepAll: true,
+//                     reportDir: 'TestReports',
+//                     reportFiles: 'TestExecutionReport.html',
+//                     reportName: 'HTML Sanity Extent Report',
+//                     reportTitles: ''])
+//             }
+//         }
     }
     post {
             always {
