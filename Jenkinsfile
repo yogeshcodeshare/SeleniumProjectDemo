@@ -13,8 +13,8 @@ pipeline {
         MAVEN_CLEAN_PACKAGE = "mvn -Dmaven.test.failure.ignore=true clean package"
         MAVEN_CLEAN_TEST_REGRESSION = "mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testrunner/test_regression.xml"
         MAVEN_CLEAN_TEST_SANITY = "mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testrunner/test_sanity.xml"
-        ALLURE_RESULTS_DIR = 'companyName/allure-results'
-        ALLURE_RESULTS_ARCHIVE_DIR = 'companyName/allure-results-archive'
+        ALLURE_RESULTS_DIR = 'allure-results'
+        ALLURE_RESULTS_ARCHIVE_DIR = 'allure-results-archive'
     }
 
     stages {
@@ -124,7 +124,7 @@ pipeline {
                         jdk: '',
                         properties: [],
                         reportBuildPolicy: 'ALWAYS',
-                        results: [[path: 'companyName/allure-results']]
+                        results: [[path: 'allure-results']]
                     ])
                 }
             }
@@ -203,7 +203,7 @@ pipeline {
                 publishHTML([allowMissing: false,
                     alwaysLinkToLastBuild: false,
                     keepAll: true,
-                    reportDir: 'companyName/TestReports',
+                    reportDir: 'TestReports',
                     reportFiles: 'TestExecutionReport.html',
                     reportName: 'HTML Sanity Extent Report',
                     reportTitles: ''])
