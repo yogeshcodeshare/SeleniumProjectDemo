@@ -4,7 +4,7 @@
        thread-count="4">
 
     <listeners>
-        <listener class-name="com.qa.projectNameLUMA.listeners.TestAllureListener"/>
+        <listener class-name="com.qa.projectNameLUMA.listeners.ExtentReportListener"/>
     </listeners>
 
     <test name="Registration Test">
