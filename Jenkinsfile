@@ -88,7 +88,7 @@ pipeline {
                     try {
                         echo "Running Regression Tests"
                         git url: "${REPO_URL}", credentialsId: '42c246fe-f282-436e-a83a-a1469a36a4da'
-                        dir('.') {
+                        dir('') {
                             // Run the Maven command and capture the result
                             def result = sh(script: "${MAVEN_CLEAN_TEST_REGRESSION}", returnStatus: true)
 
@@ -166,7 +166,7 @@ pipeline {
                         echo "Running Sanity Tests"
                         try {
                             git url: "${REPO_URL}", credentialsId: '42c246fe-f282-436e-a83a-a1469a36a4da'
-                            dir('.') {
+                            dir('') {
                                 // Run the Maven command and capture the result
                                 def result = sh(script: "${MAVEN_CLEAN_TEST_SANITY}", returnStatus: true)
 
