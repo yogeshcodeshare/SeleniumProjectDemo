@@ -11,12 +11,15 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.io.FileHandler;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Properties;
 
 
@@ -47,14 +50,24 @@ public class DriverFactory {
 
         switch (browserName.toLowerCase().trim()){
             case "chrome":
-                //driver = new ChromeDriver();
-                //initialization of Local copy of driver
-                tlDriver.set(new ChromeDriver(optionsManager.getChromeOptions()));//option manager will give option for headless/incognito mode
+                if(Boolean.parseBoolean(prop.getProperty("remote"))){
+                    //Run test cases on Remote machine using selenium/selenoid Grid
+                    initRemoteDriver("chrome");
+                }else {
+                    //driver = new ChromeDriver();
+                    //initialization of Local copy of driver
+                    tlDriver.set(new ChromeDriver(optionsManager.getChromeOptions()));//option manager will give option for headless/incognito mode
+                }
                 break;
             case "firefox":
-                //driver = new FirefoxDriver();
-                //initialization of Local copy of driver
-                tlDriver.set(new FirefoxDriver(optionsManager.getFirefoxOptions()));//option manager will give option for headless/incognito mode
+                if(Boolean.parseBoolean(prop.getProperty("remote"))){
+                    //Run test cases on Remote machine using selenium/selenoid Grid
+                    initRemoteDriver("firefox");
+                }else {
+                    //driver = new FirefoxDriver();
+                    //initialization of Local copy of driver
+                    tlDriver.set(new FirefoxDriver(optionsManager.getFirefoxOptions()));//option manager will give option for headless/incognito mode
+                }
                 break;
             case "edge":
                 //driver = new EdgeDriver();
@@ -75,6 +88,33 @@ public class DriverFactory {
         getDriver().get(prop.getProperty("URL"));
 
         return getDriver();
+    }
+
+    /**
+     * This Method is to initialize the Remote Driver and
+     * Run test cases on Remote machine using selenium/selenoid Grid
+     * @param browserName
+     */
+    private void initRemoteDriver(String browserName) {
+        System.out.println("Test Run on Grid with browser Name : " + browserName);
+        try {
+            switch (browserName) {
+                case "chrome":
+                    tlDriver.set(new RemoteWebDriver(new URL(prop.getProperty("huburl")), optionsManager.getChromeOptions()));
+                    break;
+                case "firefox":
+                    tlDriver.set(new RemoteWebDriver(new URL(prop.getProperty("huburl")), optionsManager.getFirefoxOptions()));
+                    break;
+                case "edge":
+                    tlDriver.set(new RemoteWebDriver(new URL(prop.getProperty("huburl")), optionsManager.getEdgeOptions()));
+                    break;
+                default:
+                    System.out.println("Please pass right browser on Grid");
+                    throw new BrowserException(AppError.BROWSER_NOT_FOUND);
+            }
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     //Now set the local copy of driver is Done.then we go for get driver whenever required.

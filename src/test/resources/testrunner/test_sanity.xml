@@ -8,7 +8,9 @@
     </listeners>
 
     <test name="Registration Test">
-        <parameter name="browser" value="Chrome"/>
+        <parameter name="browser" value="firefox"/>
+        <parameter name="browserVersion" value="125.0" />
+        <parameter name="testName" value="Registration Test" />
         <classes>
             <class name="com.qa.projectNameLUMA.tests.RegistrationTest"/>
         </classes>

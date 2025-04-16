@@ -10,30 +10,44 @@
 
     <test name="Registration Test">
         <parameter name="browser" value="Chrome"/>
+        <parameter name="browserVersion" value="128.0" />
+        <parameter name="testName" value="Registration Test" />
         <classes>
             <class name="com.qa.projectNameLUMA.tests.RegistrationTest"/>
         </classes>
     </test>
     <test name="Login Test">
-        <parameter name="browser" value="edge"/>
+<!--        <parameter name="browser" value="edge"/>-->
+        <parameter name="browser" value="firefox"/>
+        <parameter name="browserVersion" value="125.0" />
+        <parameter name="testName" value="Login Test" />
         <classes>
             <class name="com.qa.projectNameLUMA.tests.LoginTest"/>
         </classes>
     </test>
     <test name="Account Page Test">
         <parameter name="browser" value="chrome"/>
+        <parameter name="browserVersion" value="127.0" />
+        <parameter name="testName" value="Account Page Test" />
         <classes>
             <class name="com.qa.projectNameLUMA.tests.AccountPageTest"/>
         </classes>
     </test>
     <test name="Home Test">
-        <parameter name="browser" value="edge"/>
+<!--        <parameter name="browser" value="edge"/>-->
+        <parameter name="browser" value="firefox"/>
+        <parameter name="browserVersion" value="124.0" />
+        <parameter name="testName" value="Home Test" />
+
         <classes>
             <class name="com.qa.projectNameLUMA.tests.HomePageTest"/>
         </classes>
     </test>
     <test name="Product Info Test">
-        <parameter name="browser" value="edge"/>
+<!--        <parameter name="browser" value="edge"/>-->
+        <parameter name="browser" value="chrome"/>
+        <parameter name="browserVersion" value="110.0" />
+        <parameter name="testName" value="Product Info Test" />
         <classes>
             <class name="com.qa.projectNameLUMA.tests.ProductInfoPageTest"/>
         </classes>

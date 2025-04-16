@@ -53,9 +53,11 @@ public class HomePage {
     public SearchResultPage doSearch(String searchKey){
         System.out.println("Searching For : " +searchKey);
         if(isSearchExist()){
-            eleUtils.doClick(searchField);
+            eleUtils.isElementClickable(searchField, TimeUtil.DEFAULT_TIME);
+            eleUtils.doClick(searchField, TimeUtil.DEFAULT_TIME);
             eleUtils.doSendKeys(searchField, searchKey, TimeUtil.DEFAULT_TIME);
-            eleUtils.doClick(searchBtn);
+            eleUtils.isElementClickable(searchBtn, TimeUtil.DEFAULT_TIME);
+            eleUtils.doClick(searchBtn, TimeUtil.DEFAULT_TIME);
             return new SearchResultPage(driver); //Page Chaining Using TDD (Test Driven Development Principle)
         } else {
             System.out.println("Search field is not present on this Page.");

@@ -26,7 +26,7 @@ public class RegistrationPage {
     private final By email = By.id("email_address");
     private final By password = By.id("password");
     private final By confirmPassword = By.id("password-confirmation");
-    private final By createAccountButton = By.xpath("//button[@type='submit' and @class='action submit primary']");
+    private final By createAccountButton = By.xpath("//button[@class='action submit primary']");
     private final By createAccountSuccessMessage = By.xpath("//div[contains(text(),'Thank you for registering with Main Website Store.')]");
     private final By contactInfo = By.xpath("(//div[@class='box-content']//p)[1]");
     private final By LumaLogo = By.xpath("//a[@class='logo']");
@@ -46,6 +46,7 @@ public class RegistrationPage {
         eleUtils.doSendKeys(this.email,email,TimeUtil.DEFAULT_TIME );
         eleUtils.doSendKeys(this.password, password, TimeUtil.DEFAULT_TIME );
         eleUtils.doSendKeys(confirmPassword, password, TimeUtil.DEFAULT_TIME);
+        eleUtils.isElementClickable(createAccountButton, TimeUtil.DEFAULT_TIME);
         eleUtils.doClick(createAccountButton, TimeUtil.DEFAULT_TIME);
 
         String successMessage = eleUtils.waitForElementPresence(createAccountSuccessMessage, TimeUtil.DEFAULT_TIME).getText();

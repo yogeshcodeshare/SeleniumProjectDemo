@@ -25,9 +25,9 @@ public class BaseTest {
     protected ProductInfoPage productInfoPage;
 
     @Step("SetUp Method to Initialize the Browser : {0}")
-    @Parameters({"browser"})
+    @Parameters({"browser", "browserVersion", "testName"})
     @BeforeTest
-    public void setUp(String browserName){
+    public void setUp(@Optional String browserName,@Optional String browserVersion,@Optional String testName){
         df = new DriverFactory(); //object creation
         prop = df.initProp();
         // Now Parameter browser is directly given in browserName but due to config browser conflict arrives.
@@ -35,6 +35,8 @@ public class BaseTest {
         if(browserName!= null){
             // this will update the config browser with the Runner.xml file browser parameter
             prop.setProperty("browser",browserName);
+            prop.setProperty("browserVersion", browserVersion);
+            prop.setProperty("testName", testName);
         }
         driver = df.intiDriver(prop); //call by value from prop object.
         homePage = new HomePage(driver);
