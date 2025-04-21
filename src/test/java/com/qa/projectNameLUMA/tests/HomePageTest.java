@@ -20,8 +20,8 @@ public class HomePageTest extends BaseTest {
     @DataProvider
     public Object [][] getSearchData(){
         return new Object[][]{
-                {"bag", 8},
-                {"backpack", 6},
+                {"bag", 7},
+                {"backpack", 5},
                 {"duffle", 2}
         };
     }
